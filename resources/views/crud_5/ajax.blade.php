@@ -49,7 +49,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-danger"
-                            onclick="ajaxDelete('{{url('laravel-crud-search-sort-ajax-modal-form/delete')}}/'+$('#delete_id').val(),$('#delete_token').val())">
+                            onclick="ajaxDelete('{{url('laravel-ajax-modal/delete')}}/'+$('#delete_id').val(),$('#delete_token').val())">
                         Delete
                     </button>
                 </div>
