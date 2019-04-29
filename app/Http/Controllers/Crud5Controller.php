@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -9,19 +10,13 @@ class Crud5Controller extends Controller
 {
     public function index(Request $request)
     {
-        $request->session()->put('search', $request->has('search') ? $request->get('search') : ($request->session()->has('search') ? $request->session()->get('search') : ''));
-        $request->session()->put('gender', $request->has('gender') ? $request->get('gender') : ($request->session()->has('gender') ? $request->session()->get('gender') : -1));
-        $request->session()->put('sort', $request->has('sort') ? $request->get('sort') : ($request->session()->has('sort') ? $request->session()->get('sort') : 'desc'));
-        $customers = new Customer();
-        if ($request->session()->get('gender') != -1)
-            $customers = $customers->where('gender', $request->session()->get('gender'));
-        $customers = $customers->where('name', 'like', '%' . $request->session()->get('search') . '%')
-            ->orderBy($request->session()->get('field'), $request->session()->get('sort'))
-            ->paginate(5);
+        $customers = Customer::all();
+        $orders = Order::all();
+
         if ($request->ajax())
-            return view('crud_5.index', compact('customers'));
+            return view('crud_5.index', compact(['customers', 'orders']));
         else
-            return view('crud_5.ajax', compact('customers'));
+            return view('crud_5.ajax', compact(['customers', 'orders']));
     }
 
     public function create(Request $request)
@@ -46,7 +41,7 @@ class Crud5Controller extends Controller
             $customer->save();
             return response()->json([
                 'fail' => false,
-                'redirect_url' => url('laravel-ajax-modal')
+                'redirect_url' => url('discover')
             ]);
         }
     }
@@ -54,7 +49,7 @@ class Crud5Controller extends Controller
     public function delete($id)
     {
         Customer::destroy($id);
-        return redirect('/laravel-ajax-modal');
+        return redirect('/discover');
     }
 
     public function update(Request $request, $id)
@@ -79,7 +74,7 @@ class Crud5Controller extends Controller
             $customer->save();
             return response()->json([
                 'fail' => false,
-                'redirect_url' => url('laravel-ajax-modal')
+                'redirect_url' => url('discover')
             ]);
         }
     }

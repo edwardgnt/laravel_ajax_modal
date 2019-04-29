@@ -23,17 +23,6 @@
             color: red;
             font-weight: bold;
         }
-
-
-            #active_sub {
-                display: none;
-            }
-            #active_sub span {
-                display: block;
-                margin-bottom: .2em;
-}
-
-
     </style>
 @endsection
 @section('content')
@@ -68,7 +57,7 @@
         </div>
     </div>
     <div id="content">
-        @include('crud_5.index')
+        @include('includes.customers.index')
     </div>
     <div class="loading">
         <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i><br/>
